@@ -14,26 +14,20 @@ diarization_config = speech.SpeakerDiarizationConfig(
 config = speech.RecognitionConfig(
     encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
     enable_automatic_punctuation=True,
-    sample_rate_hertz=16000,
+    sample_rate_hertz=44100,#16000,
     language_code="en-US",
     enable_word_time_offsets=True,
     diarization_config=diarization_config,
+    model="video"
 )
 
-# Local file
-import io
-speech_file = "test.mkv"
-with io.open(speech_file, "rb") as audio_file:
-        content = audio_file.read()
-
-
-# The name of the audio file to transcribe
-gcs_uri = "gs://cloud-samples-data/speech/brooklyn_bridge.raw"
-audio = speech.RecognitionAudio(uri=gcs_uri)
-
 # Detects speech in the audio file
-response = client.recognize(config=config, audio=audio)
+gcs_uri = "gs://covert_goose_videos/test.wav"
+audio = speech.RecognitionAudio(uri=gcs_uri)
+operation = client.long_running_recognize(config=config, audio=audio)
+response = operation.result(timeout=600)
 
+print(response)
 for result in response.results:
     alternative = result.alternatives[0]
     # print(f'Alternatives: {list(map(lambda x: x.words, result.alternatives))}')
@@ -45,4 +39,4 @@ for result in response.results:
         start_time = word_info.start_time
         end_time = word_info.end_time
         speaker = word_info.speaker_tag
-        print(f'Word: {word}, Speaker: {speaker}, start_time: {start_time}, end_time: {end_time}')
+        print(f'Word: {word}, start_time: {start_time}, end_time: {end_time}')
