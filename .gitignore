@@ -50,5 +50,7 @@ yarn-error.log*
 !**/.yarn/versions
 
 **/venv/*
+.venv
 **/__pycache__/*
 *.pyc
+*.mkv
