@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "gooseninja",
+  "private_key_id": "ad3a3755b7d399ad433d2d30cb92c8b8ea850395",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7NqzD3jMI1gW0\nf3WCbHHBG9/8xgJ1hGLPbXw35AFus5c6UyeV5QTOHerpSp2Hie7gpJlBBi/0Y5ui\nbHDNeompwmh1VJ4tPy0RsdFN19jxRL+tG5su12nNTOeEA/ByTEaLk11adpv+/kWt\nja0Nq+zXoPi29DcQKFA4A+eGiqsb/Vem06jpFSXjYWiO27Mn06nll3tNsq5FtGzw\nuYzxjKGp4hyOeYaimqA1BJBxqHKsNirnsgom2IAmiZMcvBSdn6GKBIC+KfN9nHKO\nlexAp1G9mNfoOgE2+CEUdCYdvFBydTXqzaMHjndBaMR9xPcYC1THDVd9d0bYjzAJ\nywhZ0WwrAgMBAAECggEAE/ya+9uQWJR7eMZVcJ53PoXlUdfUkgtCKUxSWKfaPKFR\nDIRYKOPnBsJMPqpyoEe/iEgfpxYsBHal5PSYI7e9/rD8n0TGEPqPqzXwAdQrcFvw\nmAs8dAcXX+L39zDHI3df3gLWPT7bGfa3evcxzyXYW+Tu6J6wn4745syz6Q82Lqnx\n5XULTCtHBNvLZzzex2RAijso7BHb/fA6yNeoZGjs3HvRvo1i5L/7KP6RVnI/0882\n+BWWEmp59rJLRR6t55cXbukBKBh8Wa0gd4br+ILiMvpEco1I0B6rwrXRu3N7/H/R\nwyYQkLRBkyCYErMaNuPfjAT0HYOXWQkQJ8OJLokGMQKBgQDmZEc/ZM4e243aLQpC\nLdyQ+e3P+RMHFQnM2eya/hoooK6ULoV7sYU6xfZb3/Qf5Kc2Ppu76kOmTUXQhByZ\ncE/kyf0ehmoOK9joDjACkg+UFGqGfZ5JvkRHKbZQSL2SW0jwvl4siEFDviymCD3X\naLPABHNYJcYlrICh2tV2ceXC7wKBgQDQBcbOBLto43nhKDefBR+qKR5esWJmrd2O\nEpCBAsppCBpmaCHZDc93TWEagVPjt8+8/3cdLuCNNo6Mig/9sRerjaRla/Z4U9T5\n+d79050hSQIjxbls+VfrhtIQntLOxpAGt7LrNkO6CSsSzQedYU6c74OsXcbCNpqS\n7yKc4Uc6hQKBgA49tpW5knAf3CXXUOIEWbTwbf3EBKQUbdWmxtRRzqYiQIhSU9fw\ngi6+29qT/lAWXyugNRopgeL+tckM0YO+iIG45peDcXzMwwydC+SsyJ+7n1YO38Dp\nLOlFL8rIpEcus1SGP+X6yiX41GOy8Lem9i1xWPvi4dukTRM0Jqu6oJwrAoGASWRg\nWbtNq5nmHEwmI5KZM13Ce0I2J2fcLQ3bscicRSY4ujyvBHdc5QiF4+YRBNyLDHFN\nQxyQ2QGQlYD4V1cttLcKc0X99UIOeAtyYzdPzriFar2NyCbIoC422upOEen4UoZp\nN5czmeU2LzHrJ9l29OOEH0IOp+K/8mswWQ0aJkkCgYEAyIMsFpsUdrHLMSEfULtf\nctr7noYjTgiVF+95qs9qfGKLx8t3ZHIfnfgghp/gENzQfefsS5PMP9w1dHrajcOR\ncLQCXmzrS70l/Y6U7SeOi1oay6K02VoMKVgwgF+XUoTmUM80dh3164ZRDIUnZ2wt\nDxXUtbt+5d3cvd2vlcwV084=\n-----END PRIVATE KEY-----\n",
+  "client_email": "lecture-ninja@gooseninja.iam.gserviceaccount.com",
+  "client_id": "109470957731298022498",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/lecture-ninja%40gooseninja.iam.gserviceaccount.com"
+}
