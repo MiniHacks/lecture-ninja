@@ -30,6 +30,7 @@ class TextbookElement(BaseModel):
 class ParagraphSegment(BaseModel):
     text: str
     timestamp: float
+    speaker_tag: str
 
 class Paragraph(TextbookElement):
     kind: Literal[TextbookElementKindEnum.PARAGRAPH] = TextbookElementKindEnum.PARAGRAPH
