@@ -54,3 +54,7 @@ yarn-error.log*
 **/temp_files/*
 **/__pycache__/*
 *.pyc
+
+frontend/.env
+.env
+backend/.env
