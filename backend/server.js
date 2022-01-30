@@ -7,6 +7,7 @@ const glob = require("glob");
 const fetch = require('node-fetch');
 const mongodb = require("mongodb");
 const mongoose = require('mongoose');
+const FormData = require('form-data');
 
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -57,6 +58,12 @@ app.post("/upload", upload.single("video"), (req, res) => {
             id
         })
     });
+
+    fetch(process.env.PYURI + "/upload_video/" + req.file.filename).then(r => r.json()).then(async (r) => {
+        console.log(r);
+        const x = await lecture.updateOne({id}, {data: r, isLoading: false})
+        console.log(r, x);
+    })
 });
 
 app.get("/dash", async (req, res) => {

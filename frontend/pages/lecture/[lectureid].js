@@ -15,11 +15,12 @@ export default function lecture() {
     const [time, setTime] = useState(0);
     useEffect(() => {
         if(!lectureid) return;
-        fetch(process.env.NEXT_PUBLIC_BACKEND + "/lecture/" + lectureid).then(r => r.json()).then(r => {
-            setData(r);
-        })
+        // fetch(process.env.NEXT_PUBLIC_BACKEND + "/lecture/" + lectureid).then(r => r.json()).then(r => {
+        //     setData(r);
+        // })
         fetch(process.env.NEXT_PUBLIC_BACKEND + "/info/" + lectureid).then(r => r.json()).then(r => {
             setInfo(r)
+            setData(r.data);
         })
     }, [lectureid])
     return (<Layout>
@@ -36,6 +37,14 @@ export default function lecture() {
             Summary for: {info.class} - {info.lecture} - {time}
         </Typography>
         {parser(data, setTime)}
+        <video src={process.env.NEXT_PUBLIC_BACKEND + "/file/" + lectureid} style={{
+            position: "fixed",
+            bottom: 20,
+            right: 20,
+            width: 16 * 30,
+            height: 9 * 30,
+            background: "black"
+        }}/>
     </Layout>);
 }
 
@@ -52,7 +61,7 @@ const parser = (item, setTime) => {
                     <figcaption>{item.caption}</figcaption>
             </figure>
         case "paragraph":
-            return item.contents.map(a => <Words onClick={() => setTime(a.timestamp)} speaker={a.speaker_tag} body={a.text} />)
+            return item.contents.map(a => <Words onClick={() => setTime(a.timestamp)} speaker={a.speaker_tag} body={a.contents} />)
         default:
             return JSON.stringify(item);
     }
