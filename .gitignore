@@ -1,4 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.idea
 
 # dependencies
 **/node_modules
@@ -50,9 +51,17 @@ yarn-error.log*
 !**/.yarn/versions
 
 **/venv/*
-**/temp_files/*
+.venv
 **/__pycache__/*
 *.pyc
 **/*.png
 **/*.mp4
 **/*.mov
+*.mkv
+*.wav
+**/temp_files/*
+
+frontend/.env
+.env
+backend/.env
+backend/videos/*

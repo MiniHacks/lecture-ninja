@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import List, Literal, Optional
 from pydantic import BaseModel
+from pydantic.schema import schema
 
 # Equivalent/intended rust definition
 # 
@@ -16,7 +17,7 @@ from pydantic import BaseModel
 #     }
 # }
 
-class TextbookElementKindEnum(Enum):
+class TextbookElementKindEnum(str, Enum):
     PARAGRAPH = "paragraph"
     FIGURE = "figure"
     HEADING = "heading"
@@ -48,3 +49,12 @@ class Heading(TextbookElement):
 class Section(TextbookElement):
     kind: Literal[TextbookElementKindEnum.SECTION] = TextbookElementKindEnum.SECTION
     contents: List[TextbookElement]
+
+textbook_schema = schema([
+    TextbookElement,
+    ParagraphSegment,
+    Paragraph,
+    Figure,
+    Heading,
+    Section
+], title="textbook schema stuff")
