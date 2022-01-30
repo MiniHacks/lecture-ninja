@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import ProTip from '../src/ProTip';
 import Copyright from '../src/Copyright';
-import LoginModal from "../components/Modals/Login";
+import UploadModal from "../components/Modals/Upload";
 
 export default function About() {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -22,7 +22,7 @@ export default function About() {
                 <ProTip/>
                 <Copyright/>
             </Box>
-            {showLoginModal && <LoginModal isLogin={true} handleClose={() => setShowLoginModal(false)}/>}
+            {showLoginModal && <UploadModal handleClose={() => setShowLoginModal(false)}/>}
         </Container>
     );
 }
