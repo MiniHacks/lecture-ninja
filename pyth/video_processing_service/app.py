@@ -6,7 +6,7 @@ import subprocess
 from pathlib import Path
 import os
 
-from video_processing_service import model
+from video_processing_service import model, transcribe
 
 TEMP_DIR_NAME = Path('temp_files').resolve()
 
@@ -32,14 +32,13 @@ def process_video(
 
     # TODO: is the file actually an mp4? check mimetype? or do a conversion first? ???
     video_filename = TEMP_DIR_NAME / f"{the_uuid}.mp4" 
-    audio_filename = TEMP_DIR_NAME / f"{the_uuid}.mp3"
 
     with open(video_filename, "wb") as f:
         f.write(video_file.file.read())
 
-    subprocess.run(['ffmpeg', '-i', str(video_filename), '-q:a', '0', '-map', 'a', str(audio_filename)])
-    
-    return JSONResponse({ "did we extract audio?": "sure did!" }) 
+    schema: model.TextbookElement =  transcribe.convert_textbook_to_schema(video_filename)
+
+    return schema
 
 @app.get("/test_schema")
 async def test_schema() -> model.TextbookElement:
