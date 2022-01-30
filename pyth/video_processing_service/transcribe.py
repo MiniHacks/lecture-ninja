@@ -7,6 +7,7 @@ from video_processing_service import model
 from transformers import pipeline
 
 credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
+summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 ### THESE FUNCS ARE BLOCKING AND SHOULD NOT BE CALLED FROM AN ASYNC CONTEXT ###
 
@@ -86,7 +87,6 @@ def convert_to_model(sections) -> model.TextbookElement:
     lecture_text = " ".join(raw_words)
 
     print("Started summarization.")
-    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
     summary_text = summarizer(lecture_text, max_length=200, min_length=100, do_sample=False)[0]['summary_text']
     summary = model.Section(
