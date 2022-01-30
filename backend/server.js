@@ -70,6 +70,12 @@ app.get("/lecture/:id", (req, res) => {
     fetch(process.env.PYURI + "/test_schema").then(r => r.json()).then(r => res.json(r));
 })
 
+
+app.get("/info/:id", async (req, res) => {
+    const doc = await lecture.find({id: req.params.id});
+    res.json(doc[0]);
+})
+
 app.get("/file/:id", (req, res) => {
     glob("videos/" + req.params.id + "*", {}, function (er, files) {
         console.log(files);
