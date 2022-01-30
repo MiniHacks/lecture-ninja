@@ -3,6 +3,8 @@ import ffmpeg
 import rich
 import time
 
+import model
+
 
 def transcribe_video(f):
     def print(s):
@@ -38,9 +40,9 @@ def transcribe_video(f):
 
     # enable speaker tagging
     diarization_config = speech.SpeakerDiarizationConfig(
-    enable_speaker_diarization=True,
-    min_speaker_count=1,
-    max_speaker_count=4,
+        enable_speaker_diarization=True,
+        min_speaker_count=1,
+        max_speaker_count=4,
     )
 
     config = speech.RecognitionConfig(
@@ -50,6 +52,7 @@ def transcribe_video(f):
         language_code="en-US",
         enable_word_time_offsets=True,
         audio_channel_count=2,
+        max_alternatives=0,
         diarization_config=diarization_config,
         model="video"
     )
@@ -61,12 +64,26 @@ def transcribe_video(f):
 
     print(f"Finished operation.")
 
-    import pdb; pdb.set_trace()
     for i, result in enumerate(response.results):
             print(f"Result {i}: {result.alternatives[0].transcript}")
     
     return response.results
 
+def convert_to_model(sections):
+    import pdb; pdb.set_trace()
+    paragraphs = []
+    for section in sections:
+        try:
+            paragraph = []
+            for word in section.alternatives[0].words:
+                paragraph.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
+            paragraphs.append(model.Paragraph(contents=paragraph))
+        except:
+            pass
+
+    return model.Section(timestamp=0, contents=paragraphs)
+
 if __name__ == "__main__":
     f = 'ted.mp4'
-    transcribe_video(f)
+    t = transcribe_video(f)
+    print(convert_to_model(t))
