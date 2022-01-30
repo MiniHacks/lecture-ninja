@@ -9,7 +9,6 @@ import Footer from "../components/Footer";
 
 export default function Index() {
     const [showLoginModal, setShowLoginModal] = useState(false);
-    let isLogin = false;
     return (
         <>
             <Navbar />
@@ -33,13 +32,10 @@ export default function Index() {
                     </Typography>
 
                     <Box> 
-                        <Button sx={{ mr: "1rem", px: "2rem" }} variant="contained" onClick={() => {setShowLoginModal(true)}}>
+                        <Button sx={{ mr: "1rem", px: "2rem" }} variant="contained" onClick={() => {setShowLoginModal("signup"); }}>
                             Start
                         </Button>
-                        <Button sx={{ px: "2rem" }} variant="outlined" onClick={() => {
-                            setShowLoginModal(true);
-                            isLogin = true;
-                        }}>
+                        <Button sx={{ px: "2rem" }} variant="outlined" onClick={() => { setShowLoginModal("login"); }}>
                             Login
                         </Button>
                     </Box>
@@ -55,7 +51,7 @@ export default function Index() {
                     src="../img/mascot.png"
                 />
             </Box>
-            {showLoginModal && <LoginModal handleClose={() => setShowLoginModal(false)} isLogin={isLogin} />}
+            {showLoginModal && <LoginModal handleClose={() => setShowLoginModal(null)} isLogin={showLoginModal == "login" } />}
             <Footer />
         </>
     );
