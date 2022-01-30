@@ -24,7 +24,8 @@ export default function Index() {
                     </Typography>
                     
                     <Typography sx={{ my: "2rem" }} variant="body1" component="h1" gutterBottom>
-                        we transcribe videos into digestible sections with timestamps, images, and bolded key points or something wooo. we make things accessible
+                        We transcribe videos into digestible 'textbook-like' documents for you, complete with
+                        generated headings, timestamps, images, and an automated summary.
                     </Typography>
 
                     <Box> 
