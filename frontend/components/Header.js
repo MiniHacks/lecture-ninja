@@ -9,7 +9,6 @@ const style = {
 const Header = ({children}) => {
     return <Box sx={style}>
         <Typography variant="h3" sx={{my: 2}}> {children} </Typography>
-        
     </Box>
 }
 
