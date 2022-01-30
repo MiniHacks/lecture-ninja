@@ -8,7 +8,7 @@ import { CardActionArea } from '@mui/material';
 
 export default function CustomCard() {
     return (
-        <Card sx={{ maxWidth: 1360, borderRadius: 2, m: "1rem" }}>
+        <Card sx={{ borderRadius: 2, my: "1rem" }}>
             <CardActionArea>
                 <CardContent>
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
