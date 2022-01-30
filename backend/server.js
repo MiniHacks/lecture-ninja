@@ -5,6 +5,9 @@ const cors = require('cors');
 const {nanoid} = require("nanoid");
 const glob = require("glob");
 const fetch = require('node-fetch');
+const mongodb = require("mongodb");
+const mongoose = require('mongoose');
+
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -23,18 +26,45 @@ const io = new Server(server, {cors: {origin: '*'}});
 
 const PORT = +process.env.PORT || 9000;
 
+const lectureSchema = new mongoose.Schema({
+    id: String,
+    email: String,
+    date: Date,
+    class: String,
+    lecture: String,
+    data: Object,
+    summary: String,
+    isLoading: Boolean,
+})
+
+const lecture = new mongoose.model("Lecture", lectureSchema)
+
+
+mongoose.connect(process.env.MONGODB, {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.get('/', (req, res) => {
     res.send('hello world! this is the io server');
 });
 
 app.post("/upload", upload.single("video"), (req, res) => {
-    console.log(req.file);
+    console.log(req.body);
+
     const id = req.file.filename.split(".")[0];
-    res.json({
-        id
+    lecture.insertMany([{
+        id, email: req.body.email, class: req.body.class, lecture: req.body.lecture, isLoading: true, date: new Date()
+    }]).then(r => {
+        res.json({
+            id
+        })
     });
 });
+
+app.get("/dash", async (req, res) => {
+    const email = req.query.email;
+    console.log(email);
+    const docs = await lecture.find({email})
+    res.json(docs);
+})
 
 app.get("/lecture/:id", (req, res) => {
     fetch(process.env.PYURI + "/test_schema").then(r => r.json()).then(r => res.json(r));
