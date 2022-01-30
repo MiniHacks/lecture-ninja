@@ -170,7 +170,7 @@ def lazy_get_windows(
             if ret:
                 frames.append(frame)
             else:
-                return
+                break
 
         yield Window(frame_offset=frame_counter, frames=frames)
 
@@ -230,11 +230,9 @@ def recursive_interval_pruning(
 
 
 def main():
-    video = cv2.VideoCapture("/home/ritik/codeday_workspace/LectureNinja/pyth/rust.mp4")
-    for i in range(20 * 30):
-        _ = video.read()
+    video = cv2.VideoCapture("/home/ritik/codeday_workspace/LectureNinja/pyth/IMG_1619.MOV")
     print("starting . . .")
-    for window in lazy_get_windows(video):
+    for i, window in enumerate(lazy_get_windows(video)):
         print(f"doing the {i} time")
         x = recursive_interval_pruning(window, [])
         print(f"{len(x)} slide changes")
