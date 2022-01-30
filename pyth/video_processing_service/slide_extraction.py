@@ -343,10 +343,18 @@ def upload_ndarray_to_gcs_bucket(video_filename, image_frame_id, image) -> str:
     public_url = f"http://storage.googleapis.com/covert_goose_slides/{destination}"
     return public_url
 
-def video_to_figures_schema(video_filename) -> model.TextbookElement:
+def video_to_figures_schema(video_filename) -> model.Section:
     extracted_and_uploaded = extract_slides_from_video(
         str(video_filename),
         functools.partial(upload_ndarray_to_gcs_bucket, video_filename)
     )
 
     return lazy_convert_extracted_uploaded_slides_to_figures(extracted_and_uploaded)
+
+def merge_schema(text_section: model.Section, figures_section: model.Section) -> model.Section:
+    text = text_section.contents
+    figures = figures_section.contents
+
+    result_contents = [*text, *figures]
+    result_contents.sort(key=lambda x: x.timestamp)
+    return model.Section(timestamp=0, contents=result_contents)
