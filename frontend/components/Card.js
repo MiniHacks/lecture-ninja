@@ -10,7 +10,7 @@ import { CardActionArea } from '@mui/material';
 
 export default function CustomCard() {
     return (
-        <Card sx={{ maxWidth: 1060, borderRadius: 2, m: "1rem" }}>
+        <Card sx={{ maxWidth: 1360, borderRadius: 2, m: "1rem" }}>
             <CardActionArea>
                 <CardContent>
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -35,7 +35,9 @@ export default function CustomCard() {
                             <Typography variant="body2" gutterBottom>
                                 This is a card description. This is a card description.
                                 This is a card description. This is a card description.
-                                This is a card description.
+                                This is a card description. This is a card description.
+                                This is a card description. This is a card description.
+                                This is a card description. This is a card description.
                             </Typography>
                             <Typography sx={{ fontSize: 12 }} color="text.secondary">
                                 Uploaded April 1, 2022 at 12:14 AM

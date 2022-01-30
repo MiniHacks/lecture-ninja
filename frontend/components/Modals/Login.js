@@ -30,7 +30,6 @@ const LoginButton = ({sx = {}, ...props}) => (<Button
 const LoginModal = ({handleClose, isLogin}) => {
     const router = useRouter();
 
-
     return <Modal
         open={open}
         onClose={handleClose}
