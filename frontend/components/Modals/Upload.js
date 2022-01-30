@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Dropzone from '../../lib/upload';
 import {useCallback, useState} from "react";
 import {useRouter} from "next/router";
+import {useSession} from "next-auth/react";
 
 const style = {
     position: 'absolute',
@@ -23,17 +24,20 @@ const UploadModal = ({handleClose}) => {
     const [className, setClassName] = useState("");
     const [lectureName, setLectureName] = useState("");
     const router = useRouter();
+    const {data: session} = useSession();
+
     const startProcessing = useCallback(() => {
         const data = new FormData()
-        data.append('video', file)
         data.append('class', className);
+        data.append('email', session.user.email);
         data.append('lecture', lectureName)
+        data.append('video', file)
 
         fetch(process.env.NEXT_PUBLIC_BACKEND + '/upload', {
             method: 'POST', body: data
         }).then(r => r.json()).then((r) => {
             console.log(r);
-            router.push(process.env.NEXT_PUBLIC_BACKEND + "/file/" + r.id).then(r => console.log("pushed to new page"));
+            router.push("/dashboard").then(() => router.reload())
         })
     }, [className, lectureName, file])
     return <Modal
@@ -45,7 +49,7 @@ const UploadModal = ({handleClose}) => {
         <Box sx={style}>
             <Typography variant={"h3"} textAlign={"center"}>Upload</Typography>
             <Stack spacing={2} mt={4}>
-                <TextField variant={"outlined"} label={"Class Name"} placeholder={"(e.g. \"CSCI 4325\")"}
+                <TextField autoFocus={true} variant={"outlined"} label={"Class Name"} placeholder={"(e.g. \"CSCI 4325\")"}
                            fullWidth={true} value={className} onChange={e => setClassName(e.currentTarget.value)}
                 />
                 <TextField variant={"outlined"} label={"Lecture Name"} placeholder={"(e.g. \"Creation of Programs\")"}
