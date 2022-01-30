@@ -1,6 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import {ThemeProvider} from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import {CacheProvider} from '@emotion/react';
@@ -22,7 +24,9 @@ export default function MyApp(props) {
                 <ThemeProvider theme={theme}>
                     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                     <CssBaseline/>
+                    <Navbar />
                     <Component {...pageProps} />
+                    <Footer />
                 </ThemeProvider>
             </SessionProvider>
         </CacheProvider>
