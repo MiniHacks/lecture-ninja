@@ -5,8 +5,9 @@ from uuid import uuid4
 import subprocess
 from pathlib import Path
 import os
+from concurrent.futures import ThreadPoolExecutor
 
-from video_processing_service import model, transcribe
+from video_processing_service import model, transcribe, slide_extraction
 
 TEMP_DIR_NAME = Path('temp_files').resolve()
 
@@ -31,12 +32,22 @@ def process_video(
     the_uuid = uuid4()
 
     # TODO: is the file actually an mp4? check mimetype? or do a conversion first? ???
-    video_filename = TEMP_DIR_NAME / f"{the_uuid}.mp4"
 
+    video_filename = TEMP_DIR_NAME / f"{the_uuid}.mp4"
     with open(video_filename, "wb") as f:
         f.write(video_file.file.read())
 
-    schema: model.TextbookElement =  transcribe.convert_textbook_to_schema(video_filename)
+    with ThreadPoolExecutor(max_workers=4) as p:
+        text_schema_future = p.submit(transcribe.convert_textbook_to_schema, video_filename)
+        video_schema_future = p.submit(slide_extraction.video_to_figures_schema, video_filename)
+
+        schema = slide_extraction.merge_schema(
+            text_schema_future.result(),
+            video_schema_future.result()
+        )
+
+
+    # schema: model.TextbookElement =  transcribe.convert_textbook_to_schema(video_filename)
 
     return schema
 
@@ -59,3 +70,9 @@ async def test_schema() -> model.TextbookElement:
             timestamp=50
         )
     ])
+
+@app.get("/test_upload")
+def test_upload():
+    import cv2
+    im = cv2.imread("450.png")
+    print(slide_extraction.upload_ndarray_to_gcs_bucket("helllo", 12, im))

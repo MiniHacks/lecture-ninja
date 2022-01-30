@@ -1,11 +1,10 @@
-from google.cloud import speech, storage
-from google.oauth2 import service_account
+from typing import List
+from google.cloud import speech
 import ffmpeg
 import time
 from pathlib import Path
 from video_processing_service import model
-
-credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
+from video_processing_service.gcs import credentials, storage_client
 
 ### THESE FUNCS ARE BLOCKING AND SHOULD NOT BE CALLED FROM AN ASYNC CONTEXT ###
 
@@ -26,7 +25,8 @@ def transcribe_video(filename: Path):
     ffmpeg.run(stream)
     print("Finished ffmpeg conversion.")
 
-    storage_client = storage.Client(project="gooseninja", credentials=credentials)
+    ## this is now imported
+    # storage_client = storage.Client(project="gooseninja", credentials=credentials)
     speech_client = speech.SpeechClient(credentials=credentials)
 
     destination = f"{stem}_wav_blob"
@@ -75,10 +75,10 @@ def transcribe_video(filename: Path):
 def convert_to_model(sections) -> model.TextbookElement:
     section_contents = [model.Heading(text="empty header", timestamp=0)]
     for section in sections:
-        segments = []
+        segments: List[model.ParagraphSegment] = []
         for word in section.alternatives[0].words:
             segments.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
-        section_contents.append(model.Paragraph(contents=segments, timestamp=0))
+        section_contents.append(model.Paragraph(contents=segments, timestamp=segments[0].timestamp))
 
     return model.Section(timestamp=0, contents=section_contents)
 
