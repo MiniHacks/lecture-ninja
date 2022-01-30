@@ -13,4 +13,9 @@ export default NextAuth({
             clientSecret: process.env.DISCORD_SECRET
         })
     ],
+    callbacks: {
+        async signIn({user, account, profile, email, credentials}) {
+            return "/dashboard";
+        }
+    }
 })
