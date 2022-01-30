@@ -1,5 +1,6 @@
 from google.cloud import speech
 import ffmpeg
+import io
 
 """
 stream = ffmpeg.input('ted.mp4')
@@ -14,7 +15,11 @@ stream = ffmpeg.input('ted.mp4')
 # c=:a refers to just the audio channel, vn=None enables a binary ignore video flag
 stream = ffmpeg.output(stream.audio, "out.m4a", acodec="copy", vn=None)
 ffmpeg.run(stream)
-audio = speech.RecognitionAudio(content=)
+
+speech_file = "out.m4a"
+with io.open(speech_file, "rb") as audio_file:
+        content = audio_file.read()
+audio = speech.RecognitionAudio(uri="gs://covert_goose_videos/google_test")
 
 client = speech.SpeechClient()
 
