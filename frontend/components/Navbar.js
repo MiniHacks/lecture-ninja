@@ -9,7 +9,7 @@ const Navbar = () => {
     const {data: session} = useSession();
 
     return (
-        <Box>
+        <>
             <Box sx={{background: "linear-gradient(117.6deg, #FD360B -3.95%, #D300FF 69.63%)", height: "5px"}}>
                 &nbsp;
             </Box>
@@ -23,7 +23,7 @@ const Navbar = () => {
                     </Box>
                 </Box>
             </Layout>
-        </Box>
+        </>
     )
 }
 export default Navbar;

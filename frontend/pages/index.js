@@ -4,14 +4,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import LoginModal from "../components/Modals/Login";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 export default function Index() {
     const [showLoginModal, setShowLoginModal] = useState(false);
     return (
         <>
-            <Navbar />
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -52,7 +49,6 @@ export default function Index() {
                 />
             </Box>
             {showLoginModal && <LoginModal handleClose={() => setShowLoginModal(null)} isLogin={showLoginModal == "login" } />}
-            <Footer />
         </>
     );
 }
