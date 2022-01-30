@@ -2,6 +2,7 @@ import {Modal, TextField, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Dropzone from '../../lib/upload';
 
 const style = {
     position: 'absolute',
@@ -31,7 +32,8 @@ const UploadModal = ({handleClose}) => {
                 <TextField variant={"outlined"} label={"Lecture Name"} placeholder={"(e.g. \"Creation of Programs\")"}
                            fullWidth={true}
                 />
-                <Button fullWidth variant={"contained"} onClick={() => console.log("submitted")}>Submit!</Button>
+                <Dropzone onFileAccepted={console.log}/>
+                <Button fullWidth variant={"contained"} onClick={() => console.log("submitted")}>Start Processing</Button>
             </Stack>
         </Box>
     </Modal>
