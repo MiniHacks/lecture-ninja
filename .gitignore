@@ -53,3 +53,6 @@ yarn-error.log*
 **/temp_files/*
 **/__pycache__/*
 *.pyc
+**/*.png
+**/*.mp4
+**/*.mov
