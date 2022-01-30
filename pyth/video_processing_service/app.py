@@ -41,12 +41,9 @@ def process_video(
         text_schema_future = p.submit(transcribe.convert_textbook_to_schema, video_filename)
         video_schema_future = p.submit(slide_extraction.video_to_figures_schema, video_filename)
 
-        schema = model.Section(
-            timestamp=0,
-            contents=[
-                text_schema_future.result(),
-                video_schema_future.result()
-            ]
+        schema = slide_extraction.merge_schema(
+            text_schema_future.result(),
+            video_schema_future.result()
         )
 
 

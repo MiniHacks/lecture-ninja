@@ -1,3 +1,4 @@
+from typing import List
 from google.cloud import speech
 import ffmpeg
 import time
@@ -74,10 +75,10 @@ def transcribe_video(filename: Path):
 def convert_to_model(sections) -> model.TextbookElement:
     section_contents = [model.Heading(text="empty header", timestamp=0)]
     for section in sections:
-        segments = []
+        segments: List[model.ParagraphSegment] = []
         for word in section.alternatives[0].words:
             segments.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
-        section_contents.append(model.Paragraph(contents=segments, timestamp=0))
+        section_contents.append(model.Paragraph(contents=segments, timestamp=segments[0].timestamp))
 
     return model.Section(timestamp=0, contents=section_contents)
 
