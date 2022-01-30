@@ -33,8 +33,8 @@ export default function CustomCard({title, number, description, date, isLoading,
                             transform: isLoading ? "scaleX(-1)" : ""
 
                         }}
-                                   component="img"
-                                   image={isLoading ? "/img/geese_moving.gif" : image}
+                                   component="video"
+                                   image={isLoading ? "/img/geese_moving.gif" : process.env.NEXT_PUBLIC_BACKEND + "/file/" + id}
                                    alt="lecture thumbnail"
                         />
 
@@ -54,9 +54,6 @@ export default function CustomCard({title, number, description, date, isLoading,
                                     #{number}
                                 </Typography>
                             </Box>
-                            <Typography variant="body2" gutterBottom>
-                                {!isLoading && description}
-                            </Typography>
                             <Typography sx={{fontSize: 14}} color="text.secondary">
                                 {isLoading ? "The ninjas are currently processing your video!" : `Uploaded on ${dayjs(date).format("MMMM D, YYYY h:mm A")}`}
                             </Typography>

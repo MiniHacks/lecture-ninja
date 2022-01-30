@@ -4,11 +4,9 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 
 /* splits text to have span */
-let Body = function (body) {
-    var text = String(body);
-    text = text.split(" ").map((item, i) => <span key={i} style={{display: "inline-block", paddingLeft: 2, paddingRight: 2}}>{item}</span>);
-
-    return text;
+let Body = function (body, onClick) {
+    return body.map(t => <span onClick={() => onClick(t.timestamp)}
+                               style={{display: "inline-block", margin: 2}}>{t.text}</span>);
 }
 
 /* MAKE WORDS CLICKABLE */
@@ -17,21 +15,25 @@ const Words = ({speaker, body, onClick}) => {
     return <Box
         display={"flex"}
         flexDirection={"row"}
-        alignItems={"flex-start"}
+        justifyContent={"start"}
         my={3}
     >
         <Typography display="inline" sx={{
             mr: 1,
             fontWeight: 'bold',
-            width: 400,
-        }}> {speaker + ":"} </Typography>
+            width: 100,
+            maxWidth: 100,
+            minWidth: 100,
+            textAlign: "left"
+        }}>Speaker {"1:"} </Typography>
         <Link sx={{
             'span:hover': {
                 backgroundColor: '#232323',
-                color: '#c0c0c0'
+                color: '#c0c0c0',
+                cursor: "pointer"
             },
-        }} color='white' underline="none" href="#" onClick={() => onClick()}>
-            {Body(body)}
+        }} color='white' underline="none">
+            {Body(body, onClick)}
         </Link>
     </Box>
 }

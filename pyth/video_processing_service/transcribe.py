@@ -54,7 +54,6 @@ def transcribe_video(filename: Path):
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         enable_automatic_punctuation=True,
-        sample_rate_hertz=44100,
         language_code="en-US",
         enable_word_time_offsets=True,
         audio_channel_count=2,
@@ -76,7 +75,7 @@ def transcribe_video(filename: Path):
     return response.results
 
 def convert_to_model(sections) -> model.TextbookElement:
-    section_contents = [model.Heading(text="empty header", timestamp=0)]
+    section_contents = []
     raw_words = []
     for section in sections:
         segments: List[model.ParagraphSegment] = []

@@ -17,6 +17,7 @@ export default class MyDocument extends Document {
           <link
               href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet"/>
+            <title>lecture.ninja</title>
           {this.props.emotionStyleTags}
             <style>{
                 `

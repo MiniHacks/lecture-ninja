@@ -57,11 +57,11 @@ export default function PlaybackBar({
                         <Box sx={{ background: "linear-gradient(117.6deg, #FD360B -3.95%, #D300FF 69.63%)", height: "5px", width: `${videoPctComplete * 100}%` }}>
                             &nbsp;
                         </Box>
-                    </Box>  
+                    </Box>
                 </Box>
                 <Box sx={{ padding: '12px 15% 0', display: 'flex', flexDirection: 'row', gap: '6px' }}>
                     <Box>
-                    <IconButton color="primary" aria-label={paused ? "play" : "pause"} component="span">
+                    <IconButton color="primary" aria-label={paused ? "play" : "pause"} component="span" onClick={onPauseClicked}>
                         {paused ? <PlayArrowIcon /> : <PauseIcon />}
                     </IconButton>
 
