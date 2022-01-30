@@ -6,12 +6,10 @@ import Button from '@mui/material/Button';
 import ProTip from '../src/ProTip';
 import Copyright from '../src/Copyright';
 import UploadModal from "../components/Modals/Upload";
-import Navbar from "../components/Navbar";
 export default function About() {
     const [showLoginModal, setShowLoginModal] = useState(false);
     return (
         <>
-            <Navbar/>
             <Box sx={{my: 4}}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Next.js example

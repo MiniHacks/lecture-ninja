@@ -6,8 +6,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 
-// card
-
 export default function CustomCard() {
     return (
         <Card sx={{ maxWidth: 1360, borderRadius: 2, m: "1rem" }}>
