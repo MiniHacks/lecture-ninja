@@ -1,11 +1,9 @@
-from google.cloud import speech, storage
-from google.oauth2 import service_account
+from google.cloud import speech
 import ffmpeg
 import time
 from pathlib import Path
 from video_processing_service import model
-
-credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
+from video_processing_service.gcs import credentials, storage_client
 
 ### THESE FUNCS ARE BLOCKING AND SHOULD NOT BE CALLED FROM AN ASYNC CONTEXT ###
 
@@ -26,7 +24,8 @@ def transcribe_video(filename: Path):
     ffmpeg.run(stream)
     print("Finished ffmpeg conversion.")
 
-    storage_client = storage.Client(project="gooseninja", credentials=credentials)
+    ## this is now imported
+    # storage_client = storage.Client(project="gooseninja", credentials=credentials)
     speech_client = speech.SpeechClient(credentials=credentials)
 
     destination = f"{stem}_wav_blob"
