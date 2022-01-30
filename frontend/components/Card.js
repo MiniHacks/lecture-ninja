@@ -16,10 +16,9 @@ export default function CustomCard() {
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
 
                         {/* card image */}
-                        <CardMedia sx={{ mr: "1rem", borderRadius: 2 }}
+                        <CardMedia sx={{ mr: "1rem", borderRadius: 2, width: 1/4 }}
                             component="img"
-                            width="164"
-                            image="./thumbnail_placeholder.png"
+                            image="./img/thumbnail_placeholder.png"
                             alt="lecture thumbnail"
                         />
 
