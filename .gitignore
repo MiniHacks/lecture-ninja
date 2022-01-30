@@ -54,3 +54,6 @@ yarn-error.log*
 **/__pycache__/*
 *.pyc
 *.mkv
+*.wav
+*.mp4
+
