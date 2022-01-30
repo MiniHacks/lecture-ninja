@@ -1,16 +1,19 @@
 from google.cloud import speech, storage
+from google.oauth2 import service_account
 import ffmpeg
-import rich
 import time
 
 import model
 
+credentials = service_account.Credentials.from_service_account_file('./gooseninja-ad3a3755b7d3.json')
 
-def transcribe_video(f):
-    def print(s):
-        rich.print(f"{time.ctime()}: {s}")
+### THESE FUNCS ARE BLOCKING AND SHOULD NOT BE CALLED FROM AN ASYNC CONTEXT ###
 
-    stem = f.split(".")[0]
+def transcribe_video(filename: str):
+    # def print(s):
+    #     logger.info(s)
+
+    stem = filename.split(".")[0]
     out_file = stem + ".wav"
 
     print("Started ffmpeg conversion.")
@@ -23,8 +26,8 @@ def transcribe_video(f):
     ffmpeg.run(stream)
     print("Finished ffmpeg conversion.")
 
-    storage_client = storage.Client()
-    speech_client = speech.SpeechClient()
+    storage_client = storage.Client(project="gooseninja", credentials=credentials)
+    speech_client = speech.SpeechClient(credentials=credentials)
 
     destination = f"{stem}_wav_blob"
     bucket = storage_client.bucket("covert_goose_videos")
@@ -69,21 +72,20 @@ def transcribe_video(f):
     
     return response.results
 
-def convert_to_model(sections):
-    import pdb; pdb.set_trace()
-    paragraphs = []
+def convert_to_model(sections) -> model.TextbookElement:
+    section_contents = [model.Heading(text="empty header", timestamp=0)]
     for section in sections:
-        try:
-            paragraph = [model.Heading(text="empty header")]
-            for word in section.alternatives[0].words:
-                paragraph.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
-            paragraphs.append(model.Paragraph(contents=paragraph))
-        except:
-            pass
+        segments = []
+        for word in section.alternatives[0].words:
+            segments.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
+        section_contents.append(model.Paragraph(contents=segments, timestamp=0))
 
-    return model.Section(timestamp=0, contents=paragraphs)
+    return model.Section(timestamp=0, contents=section_contents)
+
+def convert_textbook_to_schema(filename: str) -> model.TextbookElement:
+    convert_to_model(transcribe_video(filename))
 
 if __name__ == "__main__":
     f = 'ted.mp4'
     t = transcribe_video(f)
-    print(convert_to_model(t))
+    print(convert_to_model(t).json(indent=2))
