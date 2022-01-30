@@ -31,7 +31,7 @@ def process_video(
     the_uuid = uuid4()
 
     # TODO: is the file actually an mp4? check mimetype? or do a conversion first? ???
-    video_filename = TEMP_DIR_NAME / f"{the_uuid}.mp4" 
+    video_filename = TEMP_DIR_NAME / f"{the_uuid}.mp4"
 
     with open(video_filename, "wb") as f:
         f.write(video_file.file.read())
@@ -53,8 +53,8 @@ async def test_schema() -> model.TextbookElement:
         ),
         model.Paragraph(
             contents=[
-                model.ParagraphSegment(text="scratch is a event-driven programming language.", timestamp=50),
-                model.ParagraphSegment(text="it supports a lightweight threading model using both message-passing and shared-state paradigms.", timestamp=55),
+                model.ParagraphSegment(text="scratch is a event-driven programming language.", timestamp=50, speaker_tag="Speaker 1"),
+                model.ParagraphSegment(text="it supports a lightweight threading model using both message-passing and shared-state paradigms.", timestamp=55, speaker_tag="Speaker 2"),
             ],
             timestamp=50
         )

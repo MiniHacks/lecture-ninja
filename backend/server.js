@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const {nanoid} = require("nanoid");
 const glob = require("glob");
+const fetch = require('node-fetch');
 const multer = require('multer');
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -34,6 +35,10 @@ app.post("/upload", upload.single("video"), (req, res) => {
         id
     });
 });
+
+app.get("/lecture/:id", (req, res) => {
+    fetch(process.env.PYURI + "/test_schema").then(r => r.json()).then(r => res.json(r));
+})
 
 app.get("/file/:id", (req, res) => {
     glob("videos/" + req.params.id + "*", {}, function (er, files) {
