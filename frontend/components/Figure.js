@@ -5,13 +5,7 @@ const style = {
 }
 
 export default function Figure({img}) {
-    return <Box 
-        display={"flex"}
-        flexDirection={"row"}
-        alignItems={"flex-start"}
-        my={3}
-        sx={style}
-    >
+    return <Box sx={style}>
         <img src={img} alt="alt text"/>
     </Box>
 }
