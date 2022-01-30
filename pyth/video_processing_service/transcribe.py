@@ -4,6 +4,7 @@ import ffmpeg
 import time
 from pathlib import Path
 from video_processing_service import model
+from transformers import pipeline
 
 credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
 
@@ -74,11 +75,28 @@ def transcribe_video(filename: Path):
 
 def convert_to_model(sections) -> model.TextbookElement:
     section_contents = [model.Heading(text="empty header", timestamp=0)]
+    raw_words = []
     for section in sections:
         segments = []
         for word in section.alternatives[0].words:
+            raw_words.append(word.word)
             segments.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
         section_contents.append(model.Paragraph(contents=segments, timestamp=0))
+    
+    lecture_text = " ".join(raw_words)
+
+    print("Started summarization.")
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+
+    summary_text = summarizer(lecture_text, max_length=200, min_length=100, do_sample=False)[0]['summary_text']
+    summary = model.Section(
+        contents=[model.Heading(text="Summary", timestamp=0), model.Paragraph(timestamp=0, contents=[model.ParagraphSegment(timestamp=0, text=summary_text, speaker_tag=0, tiemstamp=0)])],
+        timestamp=0
+        )
+    section_contents.append(summary)
+
+    print("Finished summarization.")
+
 
     return model.Section(timestamp=0, contents=section_contents)
 
