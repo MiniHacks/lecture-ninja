@@ -1,30 +1,20 @@
 import * as React from 'react';
 import Layout from '../components/Layout';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import ProTip from '../src/ProTip';
-import Link from '../src/Link';
-import Copyright from '../src/Copyright';
-
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import CustomCard from '../components/Card';
+import Box from '@mui/material/Box';
 
-export default function About() {
+export default function Dashboard() {
   return (
-    <Layout>
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
-        </Typography>
-        <Button variant="contained" component={Link} noLinkStyle href="/">
-          Go to the main page
-        </Button>
-        <ProTip />
-      </Box>
-      <CustomCard />
-      <CustomCard />
-      <CustomCard />
-      <Copyright />
-    </Layout>
+    <>
+      <Navbar />
+      <Layout>
+        <CustomCard />
+        <CustomCard />
+        <CustomCard />
+      </Layout>
+      <Footer />
+    </>
   );
 }
