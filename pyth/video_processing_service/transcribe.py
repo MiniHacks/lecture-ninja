@@ -61,13 +61,11 @@ def transcribe_video(f):
 
     print(f"Finished operation.")
 
-    print(response)
+    import pdb; pdb.set_trace()
     for i, result in enumerate(response.results):
-            alternative = result.alternatives[0]
-            print("-" * 20)
-            print("First alternative of result {}".format(i))
-            print(u"Transcript: {}".format(alternative.transcript))
-
+            print(f"Result {i}: {result.alternatives[0].transcript}")
+    
+    return response.results
 if __name__ == "__main__":
     f = 'ted.mp4'
     transcribe_video(f)
