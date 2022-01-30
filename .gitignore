@@ -51,9 +51,13 @@ yarn-error.log*
 !**/.yarn/versions
 
 **/venv/*
-**/temp_files/*
+.venv
 **/__pycache__/*
 *.pyc
+*.mkv
+*.wav
+*.mp4
+**/temp_files/*
 
 frontend/.env
 .env

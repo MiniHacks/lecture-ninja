@@ -1,29 +1,62 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
+import {useState} from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import ProTip from '../src/ProTip';
-import Link from '../src/Link';
-import Copyright from '../src/Copyright';
+import Button from '@mui/material/Button';
+import LoginModal from "../components/Modals/Login";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Index() {
-  return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
-        </Typography>
-        <Link href="/about" color="secondary">
-          Go to the about page
-        </Link>
-        <div>
-          <Link href="/dashboard" color="secondary">
-            dashboard page
-          </Link>
-        </div>
-        <ProTip />
-        <Copyright />
-      </Box>
-    </Container>
-  );
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    let isLogin = false;
+    return (
+        <>
+            <Navbar />
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                mx: 14,
+                my: 4 }}
+            >
+                {/* text */}
+                <Box sx={{ mx: "2.5rem" }} > 
+                    {/* FIXME: add navbar */}
+                    <Typography fontFamily="Fredoka One" fontWeight="medium" sx={{ my: "2rem" }} variant="h1" component="h1" gutterBottom>
+                        Did you ever wish you could’ve rewinded an IRL
+                        lecture?
+                    </Typography>
+                    
+                    <Typography sx={{ my: "2rem" }} variant="body1" component="h1" gutterBottom>
+                        we transcribe videos into digestible sections with timestamps, images, and bolded key points or something wooo. we make things accessible
+                    </Typography>
+
+                    <Box> 
+                        <Button sx={{ mr: "1rem", px: "2rem" }} variant="contained" onClick={() => {setShowLoginModal(true)}}>
+                            Start
+                        </Button>
+                        <Button sx={{ px: "2rem" }} variant="outlined" onClick={() => {
+                            setShowLoginModal(true);
+                            isLogin = true;
+                        }}>
+                            Login
+                        </Button>
+                    </Box>
+                </Box>
+
+                <Box
+                    component="img"
+                    sx={{
+                    height: 450,
+                    width: 495,
+                    }}
+                    alt="ninja goose"
+                    src="../img/mascot.png"
+                />
+            </Box>
+            {showLoginModal && <LoginModal handleClose={() => setShowLoginModal(false)} isLogin={isLogin} />}
+            <Footer />
+        </>
+    );
 }
