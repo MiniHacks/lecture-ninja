@@ -1,4 +1,4 @@
-import {Button, Modal} from "@mui/material";
+import {Button, Modal, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import {useRouter} from "next/router";
 import {signIn} from "next-auth/react";
@@ -38,7 +38,7 @@ const LoginModal = ({handleClose, isLogin}) => {
         aria-describedby="modal-modal-description"
     >
         <Box sx={style}>
-
+            <Typography mb={4} variant={"h3"} textAlign={"center"}>{isLogin ? "Login" : "Signup"}</Typography>
             <LoginButton onClick={() => signIn("google")}>
                 <img alt={""} src={"/img/google.png"} width={20} height={20}/>
                 <span>Continue with Google</span>
