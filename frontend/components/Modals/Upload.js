@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Dropzone from '../../lib/upload';
+import {useCallback, useState} from "react";
+import {useRouter} from "next/router";
 
 const style = {
     position: 'absolute',
@@ -17,8 +19,25 @@ const style = {
 };
 
 const UploadModal = ({handleClose}) => {
+    const [file, setFile] = useState()
+    const [className, setClassName] = useState("");
+    const [lectureName, setLectureName] = useState("");
+    const router = useRouter();
+    const startProcessing = useCallback(() => {
+        const data = new FormData()
+        data.append('video', file)
+        data.append('class', className);
+        data.append('lecture', lectureName)
+
+        fetch(process.env.NEXT_PUBLIC_BACKEND + '/upload', {
+            method: 'POST', body: data
+        }).then(r => r.json()).then((r) => {
+            console.log(r);
+            router.push(process.env.NEXT_PUBLIC_BACKEND + "/file/" + r.id).then(r => console.log("pushed to new page"));
+        })
+    }, [className, lectureName, file])
     return <Modal
-        open={open}
+        open={true}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -27,13 +46,14 @@ const UploadModal = ({handleClose}) => {
             <Typography variant={"h3"} textAlign={"center"}>Upload</Typography>
             <Stack spacing={2} mt={4}>
                 <TextField variant={"outlined"} label={"Class Name"} placeholder={"(e.g. \"CSCI 4325\")"}
-                           fullWidth={true}
+                           fullWidth={true} value={className} onChange={e => setClassName(e.currentTarget.value)}
                 />
                 <TextField variant={"outlined"} label={"Lecture Name"} placeholder={"(e.g. \"Creation of Programs\")"}
-                           fullWidth={true}
+                           fullWidth={true} value={lectureName} onChange={e => setLectureName(e.currentTarget.value)}
                 />
-                <Dropzone onFileAccepted={console.log}/>
-                <Button fullWidth variant={"contained"} onClick={() => console.log("submitted")}>Start Processing</Button>
+                <Dropzone onFileAccepted={setFile}/>
+                <Button fullWidth variant={"contained"} onClick={() => startProcessing()}>Start
+                    Processing</Button>
             </Stack>
         </Box>
     </Modal>
