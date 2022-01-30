@@ -11,7 +11,6 @@ let Body = function(body) {
     return text;
 }
 
-
 /* MAKE WORDS CLICKABLE */
 const Words = ({speaker, body}) => {
     
