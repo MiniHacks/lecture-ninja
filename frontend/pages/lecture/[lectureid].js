@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import Layout from "../../components/Layout";
 import Typography from "@mui/material/Typography";
 import Words from "../../components/Words";
+import PlaybackBar from '../../components/PlaybackBar';
 
 export default function lecture() {
     const router = useRouter();
@@ -14,42 +15,43 @@ export default function lecture() {
     const [info, setInfo] = useState({})
     const [time, setTime] = useState(0);
     useEffect(() => {
-        if(!lectureid) return;
-        // fetch(process.env.NEXT_PUBLIC_BACKEND + "/lecture/" + lectureid).then(r => r.json()).then(r => {
-        //     setData(r);
-        // })
         fetch(process.env.NEXT_PUBLIC_BACKEND + "/info/" + lectureid).then(r => r.json()).then(r => {
             setInfo(r)
             setData(r.data);
         })
     }, [lectureid])
-    return (<Layout>
+    return (<>
+        <Layout>
 
-        {JSON.stringify(data)}
+            {JSON.stringify(data)}
 
-        {JSON.stringify(info)}
+            {JSON.stringify(info)}
 
-        <Typography variant={"h1"} mt={4}>
-            {info.class} - {info.lecture}
-        </Typography>
+            <Typography variant={"h1"} mt={4}>
+                {info.class} - {info.lecture}
+            </Typography>
 
-        <Typography variant={"body1"} mt={2}>
-            Summary for: {info.class} - {info.lecture} - {time}
-        </Typography>
-        {parser(data, setTime)}
-        <video src={process.env.NEXT_PUBLIC_BACKEND + "/file/" + lectureid} style={{
-            position: "fixed",
-            bottom: 20,
-            right: 20,
-            width: 16 * 30,
-            height: 9 * 30,
-            background: "black"
-        }}/>
-    </Layout>);
+            <Typography variant={"body1"} mt={2}>
+                Summary for: {info.class} - {info.lecture} - {time}
+            </Typography>
+            {parser(data, setTime)}
+            <video src={process.env.NEXT_PUBLIC_BACKEND + "/file/" + lectureid} style={{
+                position: "fixed",
+                bottom: 20,
+                right: 20,
+                width: 16 * 30,
+                height: 9 * 30,
+                background: "black"
+            }}/>
+        </Layout>
+        <PlaybackBar secondsElapsed={10} secondsTotal={11} paused={false} videoTitle={
+            `${info.class} - ${info.lecture}`
+        }/>
+    </>);
 }
 
 const parser = (item, setTime) => {
-    switch(item.kind){
+    switch (item.kind) {
         case "section":
             return item.contents.map(a => parser(a, setTime));
         case "heading":
@@ -58,10 +60,11 @@ const parser = (item, setTime) => {
             return <figure onClick={() => setTime(item.timestamp)}>
                 <img src={item.image_url}
                      alt={item.caption}/>
-                    <figcaption>{item.caption}</figcaption>
+                <figcaption>{item.caption}</figcaption>
             </figure>
         case "paragraph":
-            return item.contents.map(a => <Words onClick={() => setTime(a.timestamp)} speaker={a.speaker_tag} body={a.contents} />)
+            return item.contents.map(a => <Words onClick={() => setTime(a.timestamp)} speaker={a.speaker_tag}
+                                                 body={a.contents}/>)
         default:
             return JSON.stringify(item);
     }
