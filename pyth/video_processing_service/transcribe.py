@@ -71,16 +71,17 @@ def transcribe_video(f):
 
 def convert_to_model(sections):
     import pdb; pdb.set_trace()
-    segs = []
+    paragraphs = []
     for section in sections:
         try:
+            paragraph = []
             for word in section.alternatives[0].words:
-                segs.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
-                print(word)
+                paragraph.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
+            paragraphs.append(model.Paragraph(contents=paragraph))
         except:
             pass
 
-    return segs
+    return model.Section(timestamp=0, contents=paragraphs)
 
 if __name__ == "__main__":
     f = 'ted.mp4'
