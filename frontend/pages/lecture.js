@@ -18,6 +18,8 @@ const CustomButton = styled(Button)(({ theme }) => ({
     },
 }));
 
+const loren_ipsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum";
+
 export default function Lecture() {
     return(
         <Layout>
@@ -31,9 +33,22 @@ export default function Lecture() {
                     justifyContent: 'space-between',
                     my: 4
             }}>
+                {/* words column */}
                 <Box sx={{ display: 'flex', flexDirection: 'column' }} >
                     <Header> This is a header I guess </Header>
-                    <Words speaker="speak" body="test these are some words"/>
+                    <Words speaker="speaker guy" body={loren_ipsum}/>
+                    <Words speaker="guy" body={loren_ipsum}/>
+
+                    <Header> This is a header I guess </Header>
+                    <Words speaker="this is a test to see how long names can be" body={loren_ipsum}/>
+                </Box>
+
+                {/* images column */}
+                <Box>
+                    <Figure img="/img/geese_moving.gif" />
+                    <Figure img="/img/geese_moving.gif" />
+                    <Figure img="/img/geese_moving.gif" />
+                    <Figure img="/img/geese_moving.gif" />
                 </Box>
             </Box>
         </Layout>
