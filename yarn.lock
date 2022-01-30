@@ -2506,6 +2506,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.10.7":
+  version: 1.10.7
+  resolution: "dayjs@npm:1.10.7"
+  checksum: a0a4ca95abaa03d0702161dc2c35d16121188e342f5052b9c61cdf784dab68af766f477c04f87f71c6af666fd4d13db9b9853b87265850d6093b7b04e1bb1cd7
+  languageName: node
+  linkType: hard
+
 "debounce@npm:^1.2.1":
   version: 1.2.1
   resolution: "debounce@npm:1.2.1"
@@ -3395,6 +3402,7 @@ __metadata:
     "@emotion/styled": ^11
     "@mui/icons-material": latest
     "@mui/material": latest
+    dayjs: ^1.10.7
     eslint: latest
     eslint-config-next: latest
     formik: ^2.2.9
