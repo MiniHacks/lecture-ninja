@@ -1,25 +1,35 @@
 {
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "5.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
   },
   "dependencies": {
-    "@chakra-ui/react": "^1.6.10",
+    "@chakra-ui/react": "^1.8.1",
+    "@emotion/cache": "latest",
     "@emotion/react": "^11",
+    "@emotion/server": "latest",
     "@emotion/styled": "^11",
-    "framer-motion": "^4",
-    "next": "11.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "socket.io-client": "^4.3.2"
+    "@mui/icons-material": "latest",
+    "@mui/material": "latest",
+    "formik": "^2.2.9",
+    "framer-motion": "^5",
+    "next": "latest",
+    "next-auth": "^4.1.2",
+    "prop-types": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-dropzone": "^11.5.3",
+    "react-icons": "^4.3.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
-    "eslint": "8.0.1",
-    "eslint-config-next": "11.1.2"
+    "eslint": "latest",
+    "eslint-config-next": "latest"
   }
 }
