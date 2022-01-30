@@ -7,7 +7,6 @@ from video_processing_service import model
 from video_processing_service.gcs import credentials, storage_client
 from transformers import pipeline
 
-credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 ### THESE FUNCS ARE BLOCKING AND SHOULD NOT BE CALLED FROM AN ASYNC CONTEXT ###
