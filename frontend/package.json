@@ -17,6 +17,7 @@
     "@emotion/styled": "^11",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@next-auth/mongodb-adapter": "^1.0.1",
     "dayjs": "^1.10.7",
     "formik": "^2.2.9",
     "framer-motion": "^5",
