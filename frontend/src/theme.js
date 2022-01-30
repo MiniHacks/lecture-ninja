@@ -7,7 +7,7 @@ const theme = createTheme({
     mode: "dark", primary: {
       main: '#CF19CC',
     }, secondary: {
-      main: '#19857b',
+      main: '#CF19CC',
     }, error: {
       main: red.A400,
     },
