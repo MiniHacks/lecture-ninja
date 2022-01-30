@@ -22,7 +22,7 @@ export default function About() {
                 <ProTip/>
                 <Copyright/>
             </Box>
-            {showLoginModal && <UploadModal handleClose={() => setShowLoginModal(false)}/>}
+            {showLoginModal && <UploadModal handleClose={() => setShowLoginModal(false)} />}
         </Container>
     );
 }
