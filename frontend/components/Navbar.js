@@ -1,8 +1,9 @@
-import {useSession} from "next-auth/react";
+import {signOut, useSession} from "next-auth/react";
 import Layout from "./Layout";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
 
 const Navbar = () => {
     const {data: session} = useSession();
@@ -14,9 +15,9 @@ const Navbar = () => {
             </Box>
             <Layout>
                 <Box display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
-                    <img src="/img/logo_wide.png" alt="logo" height={"75px"} style={{margin: "10px 0"}}/>
+                    <Link href={"/"}><img src="/img/logo_wide.png" alt="logo" height={"75px"} style={{margin: "10px 0"}}/></Link>
                     <Box display={"flex"} alignItems={"center"}>
-                        {session && <Typography mr={4}>{session.user.email}</Typography>}
+                        {session && <Typography mr={4} onClick={() => signOut()} sx={{cursor: "pointer"}} title={"Logout"}>{session.user.email}</Typography>}
                         {session && <Button variant={"contained"} sx={{fontWeight: "900", fontSize: 25}}>upload
                             lecture</Button>}
                     </Box>
