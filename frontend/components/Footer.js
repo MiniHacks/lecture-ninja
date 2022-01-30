@@ -4,9 +4,11 @@ import Box from '@mui/material/Box';
 export default function Footer() {
     return (
         <Box sx={{
-            background: "#33363A",
+            background: "#191919",
             display: "flex",
-            minHeight: "10vh",
+            minHeight: "15vh", /* FIXME */
+            p: "1rem",
+
             flexDirection: "column",
             justifyContent: "center",
             textAlign: "center",
