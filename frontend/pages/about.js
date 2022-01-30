@@ -7,8 +7,6 @@ import ProTip from '../src/ProTip';
 import Link from '../src/Link';
 import Copyright from '../src/Copyright';
 
-import CustomCard from '../components/Card';
-
 export default function About() {
   return (
     <Container maxWidth="sm">
@@ -22,7 +20,6 @@ export default function About() {
         <ProTip />
         <Copyright />
       </Box>
-      < CustomCard />
     </Container>
   );
 }
