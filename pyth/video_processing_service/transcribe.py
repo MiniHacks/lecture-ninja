@@ -1,20 +1,25 @@
 from google.cloud import speech, storage
 import ffmpeg
-from rich import print
+import rich
 import time
 
 
 def transcribe_video(f):
+    def print(s):
+        rich.print(f"{time.ctime()}: {s}")
+
     stem = f.split(".")[0]
     out_file = stem + ".wav"
 
+    print("Started ffmpeg conversion.")
     stream = ffmpeg.input('ted.mp4')
     # type is coerced to wav by out_file
     # vn=None sets -vn, no video
     # y=None sets -y, no confirmation
     stream = ffmpeg.output(stream.audio, out_file, vn=None, y=None, loglevel="error")
-    # write to outfile (I think)
+    # write to outfile
     ffmpeg.run(stream)
+    print("Finished ffmpeg conversion.")
 
     storage_client = storage.Client()
     speech_client = speech.SpeechClient()
@@ -25,10 +30,9 @@ def transcribe_video(f):
 
     blob.upload_from_filename(out_file)
 
-    print(f"File {out_file} uploaded to {destination}.")
+    print(f"Uploaded {out_file} to {destination}.")
 
     uri=f"gs://covert_goose_videos/{destination}"
-    print(uri)
     audio = speech.RecognitionAudio(uri=uri)
 
 
@@ -50,12 +54,12 @@ def transcribe_video(f):
         model="video"
     )
 
-    print(f"{time.ctime()}: Started operation.")
+    print(f"Started operation.")
 
     operation = speech_client.long_running_recognize(config=config, audio=audio)
     response = operation.result(timeout=600)
 
-    print(f"{time.ctime()}: Finished operation.")
+    print(f"Finished operation.")
 
     print(response)
     for i, result in enumerate(response.results):
