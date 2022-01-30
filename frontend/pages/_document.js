@@ -18,6 +18,19 @@ export default class MyDocument extends Document {
               href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet"/>
           {this.props.emotionStyleTags}
+            <style>{
+                `
+                
+                @media screen and (max-width: 950px){
+                body{
+                display: none;
+                }
+                html {
+                background: #141414;
+                }
+            }`
+            }
+            </style>
         </Head>
         <body>
         <Main/>
