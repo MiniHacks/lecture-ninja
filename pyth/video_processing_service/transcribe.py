@@ -1,6 +1,5 @@
 from google.cloud import speech, storage
 import ffmpeg
-import io
 # Instantiates a client
 
 fin = 'ted.mp4'
@@ -13,18 +12,16 @@ stream = ffmpeg.output(stream.audio, fout, vn=None, y=None)
 ffmpeg.run(stream)
 
 storage_client = storage.Client()
-    bucket = storage_client.bucket("covert_goose_videos")
-    blob = bucket.blob(f"{stem}_wav_blob")
+destination = f"{stem}_wav_blob"
+bucket = storage_client.bucket("covert_goose_videos")
+blob = bucket.blob(destination)
 
-    blob.upload_from_filename(stem + ".wav")
+blob.upload_from_filename(fout)
 
-    print(
-        f"File {} uploaded to {}.".format(
-            stem + ".wav", destination_blob_name
-        )
+print(f"File {fout} uploaded to {destination}.")
 
 
-audio = speech.RecognitionAudio(uri="gs://covert_goose_videos/test_wav")
+audio = speech.RecognitionAudio(uri=f"gs://{bucket}/{destination}")
 
 client = speech.SpeechClient()
 
