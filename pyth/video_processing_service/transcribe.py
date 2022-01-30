@@ -2,22 +2,22 @@ from google.cloud import speech, storage
 from google.oauth2 import service_account
 import ffmpeg
 import time
+from pathlib import Path
+from video_processing_service import model
 
-import model
-
-credentials = service_account.Credentials.from_service_account_file('./gooseninja-ad3a3755b7d3.json')
+credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
 
 ### THESE FUNCS ARE BLOCKING AND SHOULD NOT BE CALLED FROM AN ASYNC CONTEXT ###
 
-def transcribe_video(filename: str):
+def transcribe_video(filename: Path):
     # def print(s):
     #     logger.info(s)
 
-    stem = filename.split(".")[0]
+    stem = filename.stem
     out_file = stem + ".wav"
 
     print("Started ffmpeg conversion.")
-    stream = ffmpeg.input('ted.mp4')
+    stream = ffmpeg.input(filename)
     # type is coerced to wav by out_file
     # vn=None sets -vn, no video
     # y=None sets -y, no confirmation
@@ -83,7 +83,7 @@ def convert_to_model(sections) -> model.TextbookElement:
     return model.Section(timestamp=0, contents=section_contents)
 
 def convert_textbook_to_schema(filename: str) -> model.TextbookElement:
-    convert_to_model(transcribe_video(filename))
+    return convert_to_model(transcribe_video(filename))
 
 if __name__ == "__main__":
     f = 'ted.mp4'
