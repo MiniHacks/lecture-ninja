@@ -1,9 +1,10 @@
-from google.cloud import speech, storage
-from google.oauth2 import service_account
+from typing import List
+from google.cloud import speech
 import ffmpeg
 import time
 from pathlib import Path
 from video_processing_service import model
+from video_processing_service.gcs import credentials, storage_client
 from transformers import pipeline
 
 credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
@@ -28,7 +29,8 @@ def transcribe_video(filename: Path):
     ffmpeg.run(stream)
     print("Finished ffmpeg conversion.")
 
-    storage_client = storage.Client(project="gooseninja", credentials=credentials)
+    ## this is now imported
+    # storage_client = storage.Client(project="gooseninja", credentials=credentials)
     speech_client = speech.SpeechClient(credentials=credentials)
 
     destination = f"{stem}_wav_blob"
@@ -78,12 +80,11 @@ def convert_to_model(sections) -> model.TextbookElement:
     section_contents = [model.Heading(text="empty header", timestamp=0)]
     raw_words = []
     for section in sections:
-        segments = []
+        segments: List[model.ParagraphSegment] = []
         for word in section.alternatives[0].words:
             raw_words.append(word.word)
             segments.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
-        section_contents.append(model.Paragraph(contents=segments, timestamp=0))
-    
+        section_contents.append(model.Paragraph(contents=segments, timestamp=segments[0].timestamp))
     lecture_text = " ".join(raw_words)
 
     print("Started summarization.")
@@ -96,7 +97,6 @@ def convert_to_model(sections) -> model.TextbookElement:
     section_contents.append(summary)
 
     print("Finished summarization.")
-
 
     return model.Section(timestamp=0, contents=section_contents)
 

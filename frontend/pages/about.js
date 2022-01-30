@@ -6,10 +6,12 @@ import Button from '@mui/material/Button';
 import ProTip from '../src/ProTip';
 import Copyright from '../src/Copyright';
 import UploadModal from "../components/Modals/Upload";
+import Words from '../components/Words';
 export default function About() {
     const [showLoginModal, setShowLoginModal] = useState(false);
     return (
         <>
+            <Words speaker="speak" body="test these are some words"/>
             <Box sx={{my: 4}}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Next.js example
