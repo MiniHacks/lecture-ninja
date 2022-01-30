@@ -62,3 +62,4 @@ yarn-error.log*
 frontend/.env
 .env
 backend/.env
+backend/videos/*
