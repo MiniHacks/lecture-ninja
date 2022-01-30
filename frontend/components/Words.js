@@ -20,7 +20,11 @@ const Words = ({speaker, body, onClick}) => {
         alignItems={"center"}
         my={0}
     >
-        <Typography display="inline" sx={{mr: 1, fontWeight: 'bold'}}> {speaker + ":"} </Typography>
+        <Typography display="inline" sx={{
+            mr: 1,
+            fontWeight: 'bold',
+            width: 400,
+        }}> {speaker + ":"} </Typography>
         <Link sx={{
             'span:hover': {
                 backgroundColor: '#232323',
