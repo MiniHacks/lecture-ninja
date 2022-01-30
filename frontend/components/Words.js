@@ -27,7 +27,7 @@ const Words = ({speaker, body}) => {
                 color: '#c0c0c0'
               },
         }} color='white' underline="none" href="#">
-            <Typography display="inline"> {Body("okay hooray body text hover")} </Typography>
+            <Typography display="inline"> {Body(body)} </Typography>
         </Link>
     </Box>
 }
