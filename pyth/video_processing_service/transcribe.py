@@ -1,5 +1,6 @@
 from google.cloud import speech, storage
 import ffmpeg
+from rich import print
 # Instantiates a client
 
 fin = 'ted.mp4'
@@ -20,8 +21,9 @@ blob.upload_from_filename(fout)
 
 print(f"File {fout} uploaded to {destination}.")
 
-
-audio = speech.RecognitionAudio(uri=f"gs://{bucket}/{destination}")
+uri=f"gs://covert_goose_videos/{destination}"
+print(uri)
+audio = speech.RecognitionAudio(uri=uri)
 
 client = speech.SpeechClient()
 
