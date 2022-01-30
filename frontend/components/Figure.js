@@ -1,11 +1,17 @@
 import * as React from 'react';
+import Box from "@mui/material/Box";
 
 const style = {
-    maxWidth: "30%"
+    padding: "1rem",
 }
 
 export default function Figure({img}) {
-    return <Box sx={style}>
-        <img src={img} alt="alt text"/>
-    </Box>
+    return <Box
+        component="img"
+        sx={{
+            maxWidth: 400,
+        }}
+        alt="cool lecture pics"
+        src={img}
+    />
 }
