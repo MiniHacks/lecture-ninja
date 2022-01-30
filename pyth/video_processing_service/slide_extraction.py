@@ -138,9 +138,13 @@ def get_num_sift_matches_between_slides(
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
     # Match descriptors.
-    matches = bf.match(slide_a.descriptors, slide_b.descriptors)
+    try:
+        matches = bf.match(slide_a.descriptors, slide_b.descriptors)
 
-    return len(matches)
+        return len(matches)
+    except Exception as e:
+        print(e)
+        return 0
 
 
 def get_num_sift_matches_between_imgs(a: np.ndarray, b: np.ndarray) -> int:

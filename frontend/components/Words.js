@@ -17,8 +17,8 @@ const Words = ({speaker, body, onClick}) => {
     return <Box
         display={"flex"}
         flexDirection={"row"}
-        alignItems={"center"}
-        my={0}
+        alignItems={"flex-start"}
+        my={3}
     >
         <Typography display="inline" sx={{mr: 1, fontWeight: 'bold'}}> {speaker + ":"} </Typography>
         <Link sx={{

@@ -7,7 +7,7 @@ from video_processing_service import model
 from video_processing_service.gcs import credentials, storage_client
 from transformers import pipeline
 
-credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
+# credentials = service_account.Credentials.from_service_account_file(Path(__file__).parent / './gooseninja-ad3a3755b7d3.json')
 summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
 ### THESE FUNCS ARE BLOCKING AND SHOULD NOT BE CALLED FROM AN ASYNC CONTEXT ###
@@ -73,7 +73,7 @@ def transcribe_video(filename: Path):
 
     for i, result in enumerate(response.results):
             print(f"Result {i}: {result.alternatives[0].transcript}")
-    
+
     return response.results
 
 def convert_to_model(sections) -> model.TextbookElement:
@@ -84,7 +84,11 @@ def convert_to_model(sections) -> model.TextbookElement:
         for word in section.alternatives[0].words:
             raw_words.append(word.word)
             segments.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
-        section_contents.append(model.Paragraph(contents=segments, timestamp=segments[0].timestamp))
+        if segments:
+            t = segments[0].timestamp
+        else:
+            t = 0
+        section_contents.append(model.Paragraph(contents=segments, timestamp=t))
     lecture_text = " ".join(raw_words)
 
     print("Started summarization.")

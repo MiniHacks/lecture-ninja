@@ -25,17 +25,17 @@ def make_temp_file_dir():
 async def root():
     return {"message": "Hello World"}
 
-@app.post("/upload_video")
+@app.get("/upload_video/{file_id}")
 def process_video(
-    video_file: UploadFile = File(...)
+    file_id: str
+    # video_file: UploadFile = File(...)
 ):
-    the_uuid = uuid4()
 
     # TODO: is the file actually an mp4? check mimetype? or do a conversion first? ???
 
-    video_filename = TEMP_DIR_NAME / f"{the_uuid}.mp4"
-    with open(video_filename, "wb") as f:
-        f.write(video_file.file.read())
+    video_filename = Path(f"../backend/videos/{file_id}")
+    #with open(video_filename, "wb") as f:
+    #    f.write(video_file.file.read())
 
     with ThreadPoolExecutor(max_workers=4) as p:
         text_schema_future = p.submit(transcribe.convert_textbook_to_schema, video_filename)
