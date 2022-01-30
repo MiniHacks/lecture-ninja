@@ -17,7 +17,6 @@ export default function Index() {
                 display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                minHeight: "70vh",
                 mx: 14,
                 my: 4 }}
             >
