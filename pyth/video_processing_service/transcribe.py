@@ -74,7 +74,7 @@ def convert_to_model(sections):
     paragraphs = []
     for section in sections:
         try:
-            paragraph = []
+            paragraph = [model.Heading(text="empty header")]
             for word in section.alternatives[0].words:
                 paragraph.append(model.ParagraphSegment(text=word.word, timestamp=word.start_time.seconds, speaker_tag=word.speaker_tag))
             paragraphs.append(model.Paragraph(contents=paragraph))
