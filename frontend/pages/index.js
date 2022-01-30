@@ -4,20 +4,19 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import LoginModal from "../components/Modals/Login";
+import Layout from "../components/Layout";
 
 export default function Index() {
     const [showLoginModal, setShowLoginModal] = useState(false);
     return (
-        <>
+        <Layout>
             <Box sx={{
                 display: 'flex',
-                flexDirection: 'row',
                 justifyContent: 'space-between',
-                mx: 14,
                 my: 4 }}
             >
                 {/* text */}
-                <Box sx={{ mx: "2.5rem" }} > 
+                <Box sx={{ }} > 
                     {/* FIXME: add navbar */}
                     <Typography fontFamily="Fredoka One" fontWeight="medium" sx={{ my: "2rem" }} variant="h1" component="h1" gutterBottom>
                         Did you ever wish you could’ve rewinded an IRL
@@ -49,6 +48,6 @@ export default function Index() {
                 />
             </Box>
             {showLoginModal && <LoginModal handleClose={() => setShowLoginModal(null)} isLogin={showLoginModal == "login" } />}
-        </>
+        </Layout>
     );
 }
