@@ -66,6 +66,7 @@ def transcribe_video(f):
             print(f"Result {i}: {result.alternatives[0].transcript}")
     
     return response.results
+
 if __name__ == "__main__":
     f = 'ted.mp4'
     transcribe_video(f)
