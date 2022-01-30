@@ -1,77 +1,72 @@
 from google.cloud import speech, storage
 import ffmpeg
-from rich import print
-# Instantiates a client
-
-fin = 'ted.mp4'
-stem = fin.split(".")[0]
-fout = stem + ".wav"
-
-stream = ffmpeg.input('ted.mp4')
-# c=:a refers to just the audio channel, vn=None enables a binary ignore video flag
-stream = ffmpeg.output(stream.audio, fout, vn=None, y=None)
-ffmpeg.run(stream)
-
-storage_client = storage.Client()
-destination = f"{stem}_wav_blob"
-bucket = storage_client.bucket("covert_goose_videos")
-blob = bucket.blob(destination)
-
-blob.upload_from_filename(fout)
-
-print(f"File {fout} uploaded to {destination}.")
-
-uri=f"gs://covert_goose_videos/{destination}"
-print(uri)
-audio = speech.RecognitionAudio(uri=uri)
-
-client = speech.SpeechClient()
-
-diarization_config = speech.SpeakerDiarizationConfig(
-  enable_speaker_diarization=True,
-  min_speaker_count=1,
-  max_speaker_count=20,
-)
+import rich
+import time
 
 
-config = speech.RecognitionConfig(
-    encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-    enable_automatic_punctuation=True,
-    sample_rate_hertz=44100,
-    language_code="en-US",
-    enable_word_time_offsets=True,
-    audio_channel_count=2,
-    diarization_config=diarization_config,
-    model="video"
-)
+def transcribe_video(f):
+    def print(s):
+        rich.print(f"{time.ctime()}: {s}")
 
-# Detects speech in the audio file
-#gcs_uri = "gs://covert_goose_videos/test.wav"
-#audio = speech.RecognitionAudio(uri=gcs_uri)
-print(u"Waiting for operation to complete...")
-operation = client.long_running_recognize(config=config, audio=audio)
+    stem = f.split(".")[0]
+    out_file = stem + ".wav"
 
-response = operation.result(timeout=60)
-print("Operation ends!")
+    print("Started ffmpeg conversion.")
+    stream = ffmpeg.input('ted.mp4')
+    # type is coerced to wav by out_file
+    # vn=None sets -vn, no video
+    # y=None sets -y, no confirmation
+    stream = ffmpeg.output(stream.audio, out_file, vn=None, y=None, loglevel="error")
+    # write to outfile
+    ffmpeg.run(stream)
+    print("Finished ffmpeg conversion.")
 
-print(response)
-for i, result in enumerate(response.results):
-        alternative = result.alternatives[0]
-        print("-" * 20)
-        print("First alternative of result {}".format(i))
-        print(u"Transcript: {}".format(alternative.transcript))
+    storage_client = storage.Client()
+    speech_client = speech.SpeechClient()
 
-"""
-for result in response.results:
-    alternative = result.alternatives[0]
-    # print(f'Alternatives: {list(map(lambda x: x.words, result.alternatives))}')
-    print(f'Transcript: {alternative.transcript}')
-    print(f'Confidence: {alternative.confidence}')
+    destination = f"{stem}_wav_blob"
+    bucket = storage_client.bucket("covert_goose_videos")
+    blob = bucket.blob(destination)
 
-    for word_info in alternative.words:
-        word = word_info.word
-        start_time = word_info.start_time
-        end_time = word_info.end_time
-        speaker = word_info.speaker_tag
-        print(f'Word: {word}, start_time: {start_time}, end_time: {end_time}')
-"""
+    blob.upload_from_filename(out_file)
+
+    print(f"Uploaded {out_file} to {destination}.")
+
+    uri=f"gs://covert_goose_videos/{destination}"
+    audio = speech.RecognitionAudio(uri=uri)
+
+
+    # enable speaker tagging
+    diarization_config = speech.SpeakerDiarizationConfig(
+    enable_speaker_diarization=True,
+    min_speaker_count=1,
+    max_speaker_count=4,
+    )
+
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        enable_automatic_punctuation=True,
+        sample_rate_hertz=44100,
+        language_code="en-US",
+        enable_word_time_offsets=True,
+        audio_channel_count=2,
+        diarization_config=diarization_config,
+        model="video"
+    )
+
+    print(f"Started operation.")
+
+    operation = speech_client.long_running_recognize(config=config, audio=audio)
+    response = operation.result(timeout=600)
+
+    print(f"Finished operation.")
+
+    import pdb; pdb.set_trace()
+    for i, result in enumerate(response.results):
+            print(f"Result {i}: {result.alternatives[0].transcript}")
+    
+    return response.results
+
+if __name__ == "__main__":
+    f = 'ted.mp4'
+    transcribe_video(f)
