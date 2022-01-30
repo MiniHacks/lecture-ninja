@@ -1,7 +1,21 @@
 from google.cloud import speech
+import ffmpeg
 
+"""
+stream = ffmpeg.input('ted.mp4')
+stream = ffmpeg.hflip(stream)
+stream = ffmpeg.output(stream, 'flip.mp4')
+ffmpeg.run(stream)
+"""
 
 # Instantiates a client
+
+stream = ffmpeg.input('ted.mp4')
+# c=:a refers to just the audio channel, vn=None enables a binary ignore video flag
+stream = ffmpeg.output(stream.audio, "out.m4a", acodec="copy", vn=None)
+ffmpeg.run(stream)
+audio = speech.RecognitionAudio(content=)
+
 client = speech.SpeechClient()
 
 diarization_config = speech.SpeakerDiarizationConfig(
@@ -22,8 +36,8 @@ config = speech.RecognitionConfig(
 )
 
 # Detects speech in the audio file
-gcs_uri = "gs://covert_goose_videos/test.wav"
-audio = speech.RecognitionAudio(uri=gcs_uri)
+#gcs_uri = "gs://covert_goose_videos/test.wav"
+#audio = speech.RecognitionAudio(uri=gcs_uri)
 operation = client.long_running_recognize(config=config, audio=audio)
 response = operation.result(timeout=600)
 
