@@ -15,25 +15,21 @@ const Words = ({speaker, body, onClick}) => {
     return <Box
         display={"flex"}
         flexDirection={"row"}
-        justifyContent={"start"}
+        alignItems={"flex-start"}
         my={3}
     >
         <Typography display="inline" sx={{
             mr: 1,
             fontWeight: 'bold',
-            width: 100,
-            maxWidth: 100,
-            minWidth: 100,
-            textAlign: "left"
-        }}>Speaker {"1:"} </Typography>
+            width: 400,
+        }}> {speaker + ":"} </Typography>
         <Link sx={{
             'span:hover': {
                 backgroundColor: '#232323',
-                color: '#c0c0c0',
-                cursor: "pointer"
+                color: '#c0c0c0'
             },
-        }} color='white' underline="none">
-            {Body(body, onClick)}
+        }} color='white' underline="none" href="#" onClick={() => onClick()}>
+            {Body(body)}
         </Link>
     </Box>
 }

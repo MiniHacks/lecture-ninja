@@ -54,6 +54,9 @@ export default function CustomCard({title, number, description, date, isLoading,
                                     #{number}
                                 </Typography>
                             </Box>
+                            <Typography variant="body2" gutterBottom>
+                                {!isLoading && description}
+                            </Typography>
                             <Typography sx={{fontSize: 14}} color="text.secondary">
                                 {isLoading ? "The ninjas are currently processing your video!" : `Uploaded on ${dayjs(date).format("MMMM D, YYYY h:mm A")}`}
                             </Typography>
